@@ -40,12 +40,15 @@ function App() {
         setTasks(newTasks);
     }
 
-    function changeStatus (tId: string, taskIsDone: boolean) {
-        let task = tasks.find(t=> t.id === tId)
-        if (task) {
-            task.isDone = taskIsDone
-            setTasks([...tasks])
-        }
+    // function changeStatus (tId: string, taskIsDone: boolean) {
+    //     let task = tasks.find(t=> t.id === tId)
+    //     if (task) {
+    //         task.isDone = taskIsDone
+    //         setTasks([...tasks])
+    //     }
+    // }
+    const changeStatus = (tId: string, taskIsDone: boolean) => {
+        setTasks(tasks.map(t => t.id === tId ? {...t, isDone: taskIsDone} : t))
     }
 
     return (
@@ -55,6 +58,7 @@ function App() {
                       changeFilter={changeFilter}
                       addTask={addTask}
                       changeStatus={changeStatus}
+                      filter={filter}
             />
 
         </div>
