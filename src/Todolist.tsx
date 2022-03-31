@@ -16,7 +16,7 @@ type PropsType = {
     removeTask: (todolistID: string, taskID: string) => void
     changeFilter: (todolistID: string, value: FilterValuesType) => void
     addTask: (todolistID: string, title: string) => void
-    changeStatus: (tId: string, taskIsDone: boolean) => void
+    changeStatus: (todolistID: string, taskID: string, taskIsDone: boolean) => void
     filter: FilterValuesType
 }
 export const Todolist = (props: PropsType) => {
@@ -66,7 +66,7 @@ export const Todolist = (props: PropsType) => {
                                 <input type="checkbox"
                                        checked={t.isDone}
                                        onChange={(e) => {
-                                           props.changeStatus(t.id, e.currentTarget.checked)
+                                           props.changeStatus(props.todolistID, t.id, e.currentTarget.checked)
                                        }}
                                 />
                                 <span>{t.title}</span>
