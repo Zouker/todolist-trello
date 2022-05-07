@@ -20,7 +20,7 @@ beforeEach(() => {
 })
 
 test('correct task should be deleted from correct array', () => {
-    const endState = tasksReducer(startState, removeTaskAC('2', 'todolistId2'))
+    const endState = tasksReducer(startState, removeTaskAC('todolistId2', '2',))
 
     expect(endState).toEqual({
         'todolistId1': [
@@ -38,7 +38,7 @@ test('correct task should be deleted from correct array', () => {
 
 
 test('correct task should be added to correct array', () => {
-    const endState = tasksReducer(startState, addTaskAC('juice', 'todolistId2'))
+    const endState = tasksReducer(startState, addTaskAC('todolistId2', 'juice',))
 
     expect(endState['todolistId1'].length).toBe(3);
     expect(endState['todolistId2'].length).toBe(4);
@@ -49,14 +49,14 @@ test('correct task should be added to correct array', () => {
 
 
 test('status of specified task should be changed', () => {
-    const endState = tasksReducer(startState, changeTaskStatusAC('2', false, 'todolistId2'))
+    const endState = tasksReducer(startState, changeTaskStatusAC('todolistId2', '2', false,))
 
     expect(endState['todolistId1'][1].isDone).toBe(true);
     expect(endState['todolistId2'][1].isDone).toBe(false);
 });
 
 test('title of specified task should be changed', () => {
-    const endState = tasksReducer(startState, changeTaskTitleAC('2', 'beer', 'todolistId2'))
+    const endState = tasksReducer(startState, changeTaskTitleAC('todolistId2', '2', 'beer',))
 
     expect(endState['todolistId1'][1].title).toBe('JS');
     expect(endState['todolistId2'][1].title).toBe('beer');
