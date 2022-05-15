@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import './App.css';
 import {v1} from 'uuid';
-import {TasksType, Todolist} from './Todolist';
+import {TasksType, Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
 import {Container, Grid, Paper} from '@mui/material';
 import ButtonAppBar from './components/AppBar';
