@@ -196,7 +196,7 @@ function AppWithReducers() {
     }
 
     return (
-        <div className="App">
+        <div className="Application">
             <ButtonAppBar/>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>

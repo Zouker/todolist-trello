@@ -5,7 +5,7 @@ import {BrowserRouterDecorator, ReduxStoreProviderDecorator} from '../stories/de
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Todolist/App',
+    title: 'Todolist/Application',
     component: App,
     decorators: [ReduxStoreProviderDecorator, BrowserRouterDecorator],
     // More on argTypes: https://storybook.js.org/docs/react/api/argtypes

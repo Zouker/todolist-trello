@@ -1,25 +1,27 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@mui/material';
 import {AddBox} from '@mui/icons-material';
+import {yellow} from '@mui/material/colors';
 
-type PropsType = {
-    callback: (newTitle: string) => void
+export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void }
+
+type AddItemFormPropsType = {
+    callback: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
 }
 
-export const AddItemForm: React.FC<PropsType> = React.memo(({disabled = false, callback}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({disabled = false, callback}) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState('')
 
-    const addItem = () => {
+    const addItem = async () => {
         let trimmedTask = title.trim()
         if (trimmedTask) {
-            callback(trimmedTask)
+            callback(trimmedTask, {setError, setTitle})
         } else {
             setError('Title is required')
         }
-        setTitle('')
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +46,9 @@ export const AddItemForm: React.FC<PropsType> = React.memo(({disabled = false, c
                        onKeyDown={onKeyPressHandler}
                        error={!!error}
                        helperText={error}
+                       color={'success'}
             />
-            <IconButton color="primary" onClick={addItem} disabled={disabled}>
+            <IconButton sx={{color: yellow['A700']}} onClick={addItem} disabled={disabled} style={{marginLeft: '5px'}}>
                 <AddBox/>
             </IconButton>
         </div>

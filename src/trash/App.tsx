@@ -1,18 +1,30 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import '../app/App.css';
 import {v1} from 'uuid';
 import {Todolist} from '../features/TodolistsList/Todolist/Todolist';
-import {AddItemForm} from '../components/AddItemForm/AddItemForm';
-import {Container, Grid, Paper} from '@mui/material';
-import ButtonAppBar from '../components/AppBar';
-import {TaskPriorities, TaskStatuses, TaskType} from '../api/todolist-api';
+import {Container, Grid, LinearProgress, Paper} from '@mui/material';
 import {FilterValuesType, TodolistDomainType} from '../features/TodolistsList/todolists-reducer';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import {useSelector} from 'react-redux';
+import {logout} from '../features/Auth/auth-reducer';
+import {useAppDispatch, useAppSelector} from '../utils/redux-utils';
+import {AppRootStateType} from '../utils/types';
+import {TaskPriorities, TaskStatuses, TaskType} from '../api/types';
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function App() {
+    const status = useAppSelector(state => state.app.status);
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+    const dispatch = useAppDispatch();
+
     let todolistID1 = v1();
     let todolistID2 = v1();
 
@@ -208,12 +220,29 @@ function App() {
         delete tasks[todolistID]
     }
 
+    const logoutHandler = useCallback(() => {
+        dispatch(logout())
+    }, [])
+
     return (
         <div className="App">
-            <ButtonAppBar/>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        TODOLIST
+                    </Typography>
+                    {isLoggedIn && <Button onClick={logoutHandler} color="inherit">Log out</Button>}
+                </Toolbar>
+                <div style={{height: '4px'}}>
+                    {status === 'loading' && <LinearProgress/>}
+                </div>
+            </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm callback={addTodolist}/>
+                    {/*<AddItemForm callback={addTodolist}/>*/}
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map((tl) => {
@@ -234,13 +263,13 @@ function App() {
                                         key={tl.id}
                                         todolist={tl}
                                         tasks={tasksForTodolist}
-                                        removeTask={removeTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        changeStatus={changeStatus}
-                                        removeTodolist={removeTodolist}
-                                        updateTask={updateTask}
-                                        updateTodolist={updateTodolistTitle}
+                                        // removeTask={removeTask}
+                                        // changeFilter={changeFilter}
+                                        // addTask={addTask}
+                                        // changeStatus={changeStatus}
+                                        // removeTodolist={removeTodolist}
+                                        // updateTask={updateTask}
+                                        // updateTodolist={updateTodolistTitle}
                                     />
                                 </Paper>
                             </Grid>
