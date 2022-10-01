@@ -13,6 +13,7 @@ import {Navigate} from 'react-router-dom';
 import {selectIsLoggedIn} from './selectors';
 import {authActions} from './index';
 import {useAppDispatch, useAppSelector} from '../../utils/redux-utils';
+import {lightGreen, lime} from '@mui/material/colors';
 
 type FormikErrorType = {
     email?: string
@@ -33,8 +34,8 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
+            email: 'free@samuraijs.com',
+            password: 'free',
             rememberMe: false
         },
         validate: (values) => {
@@ -90,7 +91,8 @@ export const Login = () => {
                             {...formik.getFieldProps('email')}
                         />
                         {formik.touched.email && formik.errors.email ?
-                            <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+                            <div
+                                style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
                         <TextField
                             type="password"
@@ -99,13 +101,20 @@ export const Login = () => {
                             {...formik.getFieldProps('password')}
                         />
                         {formik.touched.email && formik.errors.password ?
-                            <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+                            <div
+                                style={{color: 'red'}}>{formik.errors.password}</div> : null}
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox
                                 {...formik.getFieldProps('rememberMe')}
                             />
                         }/>
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>
+                        <Button type={'submit'}
+                                variant={'outlined'}
+                                sx={{
+                                    color: lightGreen[900],
+                                    backgroundColor: lime['A700'],
+                                }}
+                                color={'success'}>
                             Login
                         </Button>
                     </FormGroup>

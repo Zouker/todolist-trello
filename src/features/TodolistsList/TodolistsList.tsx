@@ -1,6 +1,9 @@
 import React, {FC, useCallback, useEffect} from 'react';
 import {Grid} from '@mui/material';
-import {AddItemForm, AddItemFormSubmitHelperType} from '../../components/AddItemForm/AddItemForm';
+import {
+    AddItemForm,
+    AddItemFormSubmitHelperType
+} from '../../components/AddItemForm/AddItemForm';
 import {Todolist} from './Todolist/Todolist';
 import {Navigate} from 'react-router-dom';
 import {selectIsLoggedIn} from '../Auth/selectors';
@@ -19,7 +22,6 @@ export const TodolistsList: FC<PropsType> = ({demo = false}) => {
     const dispatch = useAppDispatch()
 
     const {fetchTodolistsTC} = useActions(todolistsActions)
-
 
     const AddTodolistCallback = useCallback(async (title: string, helper: AddItemFormSubmitHelperType) => {
 
@@ -43,7 +45,9 @@ export const TodolistsList: FC<PropsType> = ({demo = false}) => {
         if (demo || !isLoggedIn) {
             return
         }
-        fetchTodolistsTC()
+        if (!todolists.length) {
+            fetchTodolistsTC()
+        }
     }, [])
 
     if (!isLoggedIn) {

@@ -21,11 +21,7 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-type PropsType = {
-    demo?: boolean
-}
-
-function App({demo = false}: PropsType) {
+function App() {
     const status = useAppSelector(selectStatus)
     const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
     const isInitialized = useAppSelector(selectIsInitialized)
@@ -38,7 +34,7 @@ function App({demo = false}: PropsType) {
     }, [])
 
     useEffect(() => {
-        if (!demo) {
+        if (!isInitialized) {
             initializeApp()
         }
     }, [])
@@ -58,13 +54,15 @@ function App({demo = false}: PropsType) {
                 backgroundColor: lime['A700']
             }}>
                 <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                    <IconButton size="large" edge="start" color="inherit"
+                                aria-label="menu" sx={{mr: 2}}>
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         TODOLIST
                     </Typography>
-                    {isLoggedIn && <Button onClick={logoutHandler} color="inherit">Log out</Button>}
+                    {isLoggedIn &&
+                        <Button onClick={logoutHandler} color="inherit">Log out</Button>}
                 </Toolbar>
                 <div style={{height: '4px'}}>
                     {status === 'loading' && <LinearProgress color={'success'}/>}
@@ -72,10 +70,11 @@ function App({demo = false}: PropsType) {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={'/'} element={<TodolistsList demo={demo}/>}/>
+                    <Route path={'/'} element={<TodolistsList demo={false}/>}/>
                     <Route path={'login'} element={<Login/>}/>
                     <Route path={'*'} element={<Navigate to={'404'}/>}/>
-                    <Route path={'404'} element={<h1 style={{display: 'flex', justifyContent: 'center'}}>
+                    <Route path={'404'} element={<h1
+                        style={{display: 'flex', justifyContent: 'center'}}>
                         404: PAGE NOT FOUND
                     </h1>}/>
                 </Routes>
